@@ -51,8 +51,8 @@ module sha_core_test(
     
     initial
     begin
-        // $dumpfile("dumpout.lxt");
-        // $dumpvars(0, uut);
+        $dumpfile("sha_core_test.vcd");
+        $dumpvars(0, uut);
         #1
         test_message = empty_message;
         clk = 0;
@@ -79,6 +79,6 @@ module sha_core_test(
         .done(done),
         .start(start),
         .result(result),
-        .rst          (1)
+        .rst          (1'b1)
     );
 endmodule

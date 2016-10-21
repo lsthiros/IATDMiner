@@ -5,10 +5,10 @@
  * message encoder. It should probably be separated into those two components
  */
 module message_schedule(addr_a, addr_b, addr_c, addr_d, a, b, c, d, round, message);
-output reg [5:0] addr_a;
-output reg [5:0] addr_b;
-output reg [5:0] addr_c;
-output reg [5:0] addr_d;
+output [5:0] addr_a;
+output [5:0] addr_b;
+output [5:0] addr_c;
+output [5:0] addr_d;
 input [5:0] round;
 input [31:0] a;
 input [31:0] b;
@@ -22,18 +22,10 @@ wire [31:0] s1;
 assign s0 = {a[6:0], a[31:7]} ^ {a[17:0], a[31:18]} ^ {3'b0, a[31:3]};
 assign s1 = {b[16:0], b[31:17]} ^ {b[18:0], b[31:19]} ^ {10'b0, b[31:10]};
 
-always @ (round)
-begin
-	if (round < 6'd16) begin
-	    addr_a = round;
-	end
-	else begin
-		addr_a = round - 15;
-		addr_b = round - 2;
-		addr_c = round - 16;
-		addr_d = round - 7;
-	end
-end
+assign addr_a = (round < 6'd16) ? round : round - 15;
+assign addr_b = round - 2;
+assign addr_c = round - 16;
+assign addr_d = round - 7;
 
 assign message = (round < 16) ? a : c + s0 + d + s1;
 
