@@ -62,7 +62,7 @@ generate
 	for (i = 0; i < 32; i=i+1)
 	begin: something
 		localparam integer j = 31 - i;
-		assign reversed_hash[8 * (i + 1) - 1 : 8 * i] = finished_hash[8 * (j + 1) - 1 : 8 * j];
+		assign reversed_hash[8 * (i + 1) - 1 : 8 * i] = finished_hash_out[8 * (j + 1) - 1 : 8 * j];
 	end
 endgenerate
 
@@ -73,8 +73,8 @@ begin
 	finished_hash <= 0;
 end
 
-assign sha_start_state = (state == WORKING) ? midstate : sha_initial_values;
-assign sha_message = (state == WORKING) ? first_hash_start : second_hash_start;
+assign sha_start_state = (state == WORKING || state == WORKING_PRE) ? midstate : sha_initial_values;
+assign sha_message = (state == WORKING || state == WORKING_PRE) ? first_hash_start : second_hash_start;
 assign state_out = state;
 assign sha_start = (state == WORKING_PRE || state == WORKING_SECOND_PRE) ? 1 : 0;
 
@@ -101,8 +101,6 @@ begin
 				end
 				nonce <= nonce;
 			end
-
-
 			/* WORKING_SECOND represents the outer SHA256 calculation. It is only
 			 * after this operation that the solution conditions are checked
 			 */
@@ -130,7 +128,7 @@ begin
 			/* Nothing is done in any other state
 			 */
 			default: begin
-				state <= NO_SOLUTION;
+				state <= state;
 			end
 		endcase
 	end

@@ -36,6 +36,7 @@ begin : TEST_CASE
 	while (1)
 	begin
 		if (state_out == 3'h5 || state_out == 3'h4) begin
+			#12;
 			$finish;
 		end
 		#1;
