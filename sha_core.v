@@ -34,7 +34,7 @@ module sha_core(
     reg [255:0] current_state;
     reg [5:0] round;
     
-    reg [31:0] message_state [0:47];
+    reg [31:0] message_state [0:15];
     
     wire [31:0] round_constant;
     wire [255:0] output_state;
@@ -65,10 +65,10 @@ module sha_core(
     end
     endgenerate
     
-    assign word_a = (addr_a < 16) ? message_chunk[addr_a[3:0]] : message_state[addr_a - 16];
-    assign word_b = (addr_b < 16) ? message_chunk[addr_b[3:0]] : message_state[addr_b - 16];
-    assign word_c = (addr_c < 16) ? message_chunk[addr_c[3:0]] : message_state[addr_c - 16];
-    assign word_d = (addr_d < 16) ? message_chunk[addr_d[3:0]] : message_state[addr_d - 16];
+    assign word_a = (addr_a < 16) ? message_chunk[addr_a[3:0]] : message_state[addr_a[3:0]];
+    assign word_b = (addr_b < 16) ? message_chunk[addr_b[3:0]] : message_state[addr_b[3:0]];
+    assign word_c = (addr_c < 16) ? message_chunk[addr_c[3:0]] : message_state[addr_c[3:0]];
+    assign word_d = (addr_d < 16) ? message_chunk[addr_d[3:0]] : message_state[addr_d[3:0]];
     
     assign done = (round == 6'b111111) ? 1 : 0;
     
@@ -129,7 +129,7 @@ module sha_core(
                         current_state <= output_state;
                         round <= round + 1;
                         if (round >= 16) begin
-                            message_state[round - 16] <= current_message;
+                            message_state[round[3:0]] <= current_message;
                         end
                     end
                 end

@@ -87,6 +87,9 @@ begin
 	else
 	begin
 		case (state)
+			/* WORKING_PRE is an initialization state. It starts the second
+			 * the SHA core with the provided midstate
+			 */
 			WORKING_PRE: begin
 				state <= WORKING;
 			end
