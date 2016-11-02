@@ -1,3 +1,8 @@
 *.vcd
 *.lxt
 *.out
+
+*.o
+*.bin
+*.elf
+*.map
