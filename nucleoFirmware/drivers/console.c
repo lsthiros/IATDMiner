@@ -8,7 +8,7 @@
 #include "spi.h"
 
 #define CONSOLE_MAX_CMD_LEN     255
-#define CONSOLE_MAX_NUM_ARGS    32
+#define CONSOLE_MAX_NUM_ARGS    100
 
 typedef void (*commandCallback)(uint32_t, char**);
 
