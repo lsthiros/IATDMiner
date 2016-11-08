@@ -68,7 +68,9 @@ endgenerate
 
 initial
 begin
-	nonce <= 0;
+	//nonce <= 0;
+	//nonce <= 'h9c9a4fc0;
+    nonce <= 'h9c993e50;
 	state <= NO_SOLUTION;
 	finished_hash <= 0;
 end

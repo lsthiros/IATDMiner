@@ -69,7 +69,8 @@ endgenerate
 initial
 begin
 	//nonce <= 0;
-	nonce <= 'h9c9a4fc0;
+	//nonce <= 'h9c9a4fc0;
+    nonce <= 'h9c993e50;
 	state <= NO_SOLUTION;
 	finished_hash <= 0;
 end
@@ -83,7 +84,8 @@ always @ (posedge clk)
 begin
 	if (!rst_n) begin
 		//nonce <= 0;
-        nonce <= 'h9c9a4fc0;
+        //nonce <= 'h9c9a4fc0;
+        nonce <= 'h9c993e50;
 		state <= WORKING_PRE;
 	end
 	else

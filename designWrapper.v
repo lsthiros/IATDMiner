@@ -30,7 +30,8 @@ module designWrapper(
     input shaReset,
     output [3:0]bitCount,
     output slowClkWire,
-    output resOut
+    output resOut,
+    output solutionFound
     );
     
     wire [7:0]spiInputData;
@@ -54,12 +55,19 @@ module designWrapper(
     (* mark_debug = "true" *) wire [255:0] target;
     (* mark_debug = "true" *) wire [2:0] shaState;
     (* mark_debug = "true" *) wire [31:0] nonce;
+
+    //(* mark_debug = "true" *) wire [255:0] midstate;
+    //(* mark_debug = "true" *) wire [95:0] header_leftovers;
+    //(* mark_debug = "true" *) wire [255:0] target;
+    //(* mark_debug = "true" *) wire [2:0] shaState;
+    //(* mark_debug = "true" *) wire [31:0] nonce;
     
     reg [32:0] my_nonce;
 
     assign slowClkWire = slowClk;
     assign resOut = reset;
 
+    assign solutionFound = shaState[2];
     
     inputFilter sclkFilter (
         .clk(slowClk),
