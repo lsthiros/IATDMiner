@@ -48,7 +48,7 @@ module shiftRegister(
     assign pOut = internal;
     assign dOut = dOutReg;
 
-    always @(negedge writeClk)
+    always @(posedge writeClk)
     begin
         if (reset == 'd0)
         begin
@@ -101,42 +101,7 @@ module shiftRegister(
             end
         end
 
-        /*
-        if (clk == 'd0)
-        begin
-            if (reset == 'd0)
-            begin
-                internal <= 'd0;
-            end else
-            begin
-                internal <= {internal[7:0], dIn};
-            end
-        end else begin
-            if (writeP == 'd1)
-            begin
-                internal[7:0] <= pIn;
-            end else
-            begin
-                internal <= internal;
-            end
-        end
-        */
+        
     end
-
-    /*
-    always @(posedge clk)
-    begin
-        dOutReg = internal[7];
-    end
-    
-    always @(negedge writeClk)
-    begin
-        if (writeP == 'd1)
-        begin
-            internal = pIn;
-        end
-    end
-    */
-
 
 endmodule

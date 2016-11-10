@@ -57,7 +57,7 @@ module SPICtrlUnit(
     assign writeReg = writeRegReg;
     assign writeShiftReg = writeShiftRegReg;
 
-    always @(negedge clk)
+    always @(posedge clk)
     begin
         ctrlState <= nextState;
 

@@ -55,7 +55,7 @@ module inputFilter(
         end
     end
 
-    always @(negedge clk)
+    always @(posedge clk)
     begin
         currState <= nextState;
 

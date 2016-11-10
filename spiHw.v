@@ -42,6 +42,7 @@ module spiHw(
     wire counterResetWire;
 
     reg [3:0]bitCounterReg = 'd0;
+    reg oldSclk;
 
     assign bitCount = bitCounterReg;
     
@@ -90,12 +91,12 @@ module spiHw(
     */
 
     // Increase the bit count on the negative sclk edge
-    always @(negedge sclk)
+    always @(posedge clk)
     begin
         if (cs == 'd1)
         begin
             bitCounterReg <= 'd0;
-        end else
+        end else if (sclk == 'd0 && oldSclk == 'd1)
         begin
             if (bitCounterReg == 'd8)
             begin
@@ -104,7 +105,14 @@ module spiHw(
             begin
                 bitCounterReg <= bitCounterReg + 'd1;
             end
+        end else begin
+            bitCounterReg <= bitCounterReg;
         end
+
+        oldSclk <= sclk;
     end
+
+
+
 
 endmodule
