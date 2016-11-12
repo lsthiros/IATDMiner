@@ -19,7 +19,7 @@ block_solver uut (
 	.target          (target),
 	.state_out       (state_out),
 	.header_leftovers(header_leftovers),
-	.nonce           (nonce));
+	.current_nonce   (nonce));
 
 
 always #1 clk = !clk;
@@ -35,7 +35,7 @@ begin : TEST_CASE
 	release uut.nonce;
 	while (1)
 	begin
-		if (state_out == 3'h5 || state_out == 3'h4) begin
+		if (state_out == 3'h2 || state_out == 3'h3) begin
 			#12;
 			$finish;
 		end

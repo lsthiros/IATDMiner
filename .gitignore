@@ -1,6 +1,8 @@
 *.vcd
 *.lxt
 *.out
+block_solver_test
+sha_test
 
 *.o
 *.bin
