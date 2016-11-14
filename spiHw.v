@@ -68,7 +68,7 @@ module spiHw(
     );
 
     // Only output when cs is low
-    assign miso = (cs == 'd0) ? dOutWire : 'dz;
+    assign miso = dOutWire;
 
     // Write the new output byte into the shift register after
     // writing the old value to a register

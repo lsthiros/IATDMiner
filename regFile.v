@@ -37,16 +37,7 @@ module regFile(
 
     reg [31:0]nonceBuffer;
 
-    reg [7:0]registers[75:0] = {
-        'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0,
-        'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0,
-        'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0,
-        'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0,
-        'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0,
-        'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0,
-        'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0, 'd0,
-        'd0, 'd0, 'd0, 'd0, 'd0, 'd0 
-        };
+    reg [7:0]registers[75:0];
 
     reg [7:0]regAOutReg = 'd0;
     reg [7:0]regBOutReg = 'd0;
