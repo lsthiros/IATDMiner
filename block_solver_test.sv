@@ -26,18 +26,46 @@ always #1 clk = !clk;
 
 initial
 begin : TEST_CASE
+	integer running = 1;
     $dumpfile("dumpout.vcd");
     $dumpvars(0, uut);
+    $display("Testing block with known solution:");
 	#2;
 	rst_n = 1;
 	#2;
 	force uut.nonce = 32'h9c9a4fc0;
 	release uut.nonce;
-	while (1)
+	while (running == 1)
 	begin
 		if (state_out == 3'h2 || state_out == 3'h3) begin
-			#12;
-			$finish;
+			if (state_out == 3'h2) begin
+				$display("PASS");
+			end
+			else begin
+				$display("***FAIL***");
+			end
+			running = 0;
+		end
+		#1;
+	end
+    $display("Testing nonce exhaustion:");
+    rst_n = 0;
+	#2;
+	rst_n = 1;
+	#2
+	force uut.nonce = 32'hfffffff0;
+	release uut.nonce;
+	running = 1;
+	while (running == 1)
+	begin
+		if (state_out == 3'h2 || state_out == 3'h3) begin
+			if (state_out == 3'h3) begin
+				$display("PASS");
+			end
+			else begin
+				$display("***FAIL***");
+			end
+			running = 0;
 		end
 		#1;
 	end

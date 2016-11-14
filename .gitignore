@@ -3,6 +3,7 @@
 *.out
 block_solver_test
 sha_test
+.DS_Store
 
 *.o
 *.bin
