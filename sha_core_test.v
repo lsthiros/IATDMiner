@@ -66,29 +66,62 @@ module sha_core_test(
         test_message = empty_message;
         clk = 0;
         start = 0;
+        $display("Testing empty message:");
         #2 start = 1;
         #5 start = 0;
         #700
         test_message = short_message;
+        if (result == 256'he3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855) begin
+            $display("PASS");
+        end
+        else begin
+            $display("***FAIL***");
+        end
+        $display("Testing short message \"abc\":");
         start = 1;
         #10 start = 0;
         #700
+        if (result == 256'hba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad) begin
+            $display("PASS");
+        end
+        else begin
+            $display("***FAIL***");
+        end
+        $display("Testing long message \"abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnop\"");
         test_message = long_message;
         start = 1;
         #10 start = 0;
         #700
+        if (result == 256'haa353e009edbaebfc6e494c8d847696896cb8b398e0173a4b5c1b636292d87c7) begin
+            $display("PASS");
+        end
+        else begin
+            $display("***FAIL***");
+        end
+        $display("Testing outer hash of known solution");
         test_message = hash_message;
         start = 1;
         #10 start = 0;
         #700
-        $display("Solution result is %X", result);
+        if (result == 256'hd87daf3fc89f293a4c06103a69124c32deb8b3ce97c9c7020000000000000000) begin
+            $display("PASS");
+        end
+        else begin
+            $display("***FAIL***");
+        end
+        $display("Testing inner hash with given midstate",);
         sha_start_1d = {midstate_start[0], midstate_start[1], midstate_start[2], midstate_start[3],
             midstate_start[4], midstate_start[5], midstate_start[6], midstate_start[7]};
         test_message = header_message;
         start = 1;
         #10 start = 0;
         #700
-        $display("Mid result is %X", result);
+        if (result == 256'h53556ee487598a8944d3bb710913c3211bdd9496f664d723bf0be1926228889f) begin
+            $display("PASS");
+        end
+        else begin
+            $display("***FAIL***");
+        end
         $finish;
     end
     

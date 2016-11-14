@@ -15,3 +15,4 @@ sha_test
 
 util/c/hash
 testbench/ShaCoreTest
+sha_core_test
