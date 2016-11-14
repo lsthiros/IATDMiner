@@ -1,6 +1,9 @@
 *.vcd
 *.lxt
 *.out
+*.pyc
+*.o
+*.a
 block_solver_test
 sha_test
 .DS_Store
