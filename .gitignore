@@ -12,3 +12,6 @@ sha_test
 *.bin
 *.elf
 *.map
+
+util/c/hash
+testbench/ShaCoreTest
