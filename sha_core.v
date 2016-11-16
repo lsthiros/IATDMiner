@@ -107,7 +107,6 @@ module sha_core(
     begin
         if (!rst) begin
             state <= 0;
-            current_state <= 0;
         end
         else begin
             case (state)

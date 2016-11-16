@@ -1,8 +1,18 @@
 *.vcd
 *.lxt
 *.out
+*.pyc
+*.o
+*.a
+block_solver_test
+sha_test
+.DS_Store
 
 *.o
 *.bin
 *.elf
 *.map
+
+util/c/hash
+testbench/ShaCoreTest
+sha_core_test
