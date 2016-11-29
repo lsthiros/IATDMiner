@@ -29,7 +29,6 @@ module designWrapper(
     input reset,
     input shaReset,
     output [3:0]bitCount,
-    output slowClkWire,
     output resOut,
     output solutionFound
     );
@@ -45,8 +44,6 @@ module designWrapper(
     reg [6:0]regBNum = 'd0;
     wire [7:0]regBOut;
 
-    reg slowClk = 'd0;
-    reg [15:0]slowClkCounter = 'd0;
     reg spiClock = 'd0;
     reg [15:0]spiClkCounter = 'd0;
 
@@ -64,21 +61,18 @@ module designWrapper(
     
     reg [32:0] my_nonce;
 
-    assign slowClkWire = slowClk;
     assign resOut = reset;
 
     assign solutionFound = shaState[2];
     
     inputFilter sclkFilter (
-        .clk(slowClk),
-        //.clk(CLK100MHZ),
+        .clk(CLK100MHZ),
         .inData(sclk),
         .outData(sclkFiltered)
     );
 
     spiHw spi (
-        .clk(slowClk),
-        //.clk(CLK100MHZ),
+        .clk(CLK100MHZ),
         .reset(reset),
         .sclk(sclkFiltered),
         .miso(miso),
@@ -93,8 +87,7 @@ module designWrapper(
     );
 
     regFile regFile (
-        .clk(slowClk),
-        //.clk(CLK100MHZ),
+        .clk(CLK100MHZ),
         .reset(reset),
         .regANum(regFileNum),
         .regAOut(spiInputData),
@@ -108,8 +101,7 @@ module designWrapper(
     );
 
     block_solver solver (
-        .clk(slowClk),
-        //.clk(CLK100MHZ),
+        .clk(CLK100MHZ),
         .rst_n(shaReset),
         .midstate(midstate),
         .header_leftovers(header_leftovers),
@@ -127,19 +119,5 @@ module designWrapper(
         .probe_in3(nonce)
     );
     */
-    
-    always @(posedge CLK100MHZ)
-    begin
-        slowClkCounter = slowClkCounter + 'd1;
-
-        if (slowClkCounter > 'd50)
-        begin
-            slowClk = ~slowClk;
-            slowClkCounter = 'd0;
-        end
-
-        spiClkCounter = spiClkCounter + 'd1;
-    end
-   
 
 endmodule
