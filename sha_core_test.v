@@ -60,9 +60,9 @@ module sha_core_test(
     begin
         $dumpfile("sha_core_test.vcd");
         $dumpvars(0, uut);
+        #1
         sha_start_1d = {sha_start[0], sha_start[1], sha_start[2], sha_start[3],
             sha_start[4], sha_start[5], sha_start[6], sha_start[7]};
-        #1
         test_message = empty_message;
         clk = 0;
         start = 0;

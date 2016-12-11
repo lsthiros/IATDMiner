@@ -20,20 +20,20 @@ module block_solver (
 
 reg [2:0] state;
 
-wire [255:0] reversed_hash;
-wire [511:0] first_hash_start = {header_leftovers, nonce, 8'h80, 360'b0, 16'h0280};
-wire [511:0] second_hash_start = {inner_hash, 8'h80, 232'b0, 16'h0100};
 
-reg [31:0] nonce;
+reg [31:0] nonce = 'd0;
 
 reg inner_valid;
 reg [255:0] inner_hash;
-reg [31:0] inner_nonce;
+reg [31:0] inner_nonce = 'd0;
 
 reg outer_valid;
 reg [255:0] outer_hash;
-reg [31:0] outer_nonce;
+reg [31:0] outer_nonce = 'd0;
 
+wire [255:0] reversed_hash;
+wire [511:0] first_hash_start = {header_leftovers, nonce, 8'h80, 360'b0, 16'h0280};
+wire [511:0] second_hash_start = {inner_hash, 8'h80, 232'b0, 16'h0100};
 
 /* SHA starting state. i.e. 32 bits of the fractional part of the squares of
  * the first 8 primes
@@ -88,15 +88,16 @@ generate
 	end
 endgenerate
 
+parameter WORKING = 0;
+parameter TRANSITION = 1;
+parameter SOLUTION_FOUND = 2;
+parameter NO_SOLUTION = 3;
+
 assign state_out = state;
 assign inner_sha_start = (state == TRANSITION && (!inner_valid || nonce != 0)) ? 1 : 0;
 assign outer_sha_start = (state == TRANSITION && inner_valid) ? 1 : 0;
 assign current_nonce = outer_nonce;
 
-parameter WORKING = 0;
-parameter TRANSITION = 1;
-parameter SOLUTION_FOUND = 2;
-parameter NO_SOLUTION = 3;
 
 /* State Transition Description
  * TRANSITION:
@@ -109,7 +110,7 @@ parameter NO_SOLUTION = 3;
 always @ (posedge clk)
 begin
 	if (!rst_n) begin
-		nonce <= 0;
+		nonce <= 'h0;
 		state <= TRANSITION;
 		inner_valid <= 0;
 		outer_valid <= 0;

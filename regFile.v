@@ -73,23 +73,28 @@ module regFile(
 
     always @(*)
     begin
-        nonceBuffer = nonceBuffer;
         if (regANum >= 'd10)
         begin
-            regAOutReg = 'd0;
+            nonceBuffer <= nonceBuffer;
+            regAOutReg <= 'd0;
         end else if (regANum == 'd0) begin
-            regAOutReg = {5'd0, state_in};
+            nonceBuffer <= nonceBuffer;
+            regAOutReg <= {5'd0, state_in};
         end else if (regANum == 'd1) begin
-            nonceBuffer = nonce;
-            regAOutReg = nonceBuffer[31:24];
+            nonceBuffer <= nonce;
+            regAOutReg <= nonce[31:24];
         end else if (regANum == 'd2) begin
-            regAOutReg = nonceBuffer[23:16];
+            nonceBuffer <= nonceBuffer;
+            regAOutReg <= nonceBuffer[23:16];
         end else if (regANum == 'd3) begin
-            regAOutReg = nonceBuffer[15:8];
+            nonceBuffer <= nonceBuffer;
+            regAOutReg <= nonceBuffer[15:8];
         end else if (regANum == 'd4) begin
-            regAOutReg = nonceBuffer[7:0];
+            nonceBuffer <= nonceBuffer;
+            regAOutReg <= nonceBuffer[7:0];
         end else begin
-            regAOutReg = registers[regANum - 'd5];
+            nonceBuffer <= nonceBuffer;
+            regAOutReg <= registers[regANum - 'd5];
         end
     end
 

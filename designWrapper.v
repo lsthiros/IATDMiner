@@ -107,7 +107,7 @@ module designWrapper(
         .header_leftovers(header_leftovers),
         .target(target),
         .state_out(shaState),
-        .nonce(nonce)
+        .current_nonce(nonce)
     );
 
     /*
